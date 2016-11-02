@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+       <title>randomquote</title>
+       <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+       <link rel="stylesheet" type="text/css" href="randomquoteCss.css">
+       <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <!-- JQUERY-->
+ <script>
+        $(document).ready(function(){
+            //my API URL
+            var url = 'http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=en&jsonp=?';
+            //SetQuote function set the quote to my html paragraph and (twitter)
+            var setQuote = function(data){
+                $('#myquote').text(data.quoteText);
+                 
+                if(data.quoteAuthor === ''){
+                    data.quoteAuthor = 'Unknown';
+                }
+                var tweetOut = 'https://twitter.com/intent/tweet?text=' + data.quoteText + ' -Author- ' + data.quoteAuthor;
+                $('#author').text('-Author- '+ data.quoteAuthor);
+                $('#mtTweet').attr('href',tweetOut);
+            };
+            
+            $(document).ready(function() {
+            $.getJSON(url, setQuote, 'jsonp');
+
+          });
+            $("#gQuote").click(function() {
+             $.getJSON(url, setQuote, 'jsonp');
+           });
+
+});
+ </script>
+    </head>
+    <body>
+ <div class="container-fluid">
+        <div class="container-fluid">
+            <p><h1 class="rq">RANDOM QUOTE</h1></p>
+            <p class="intro">The site create random quotes from different Authors </p>
+        </div>
+       <div class="container-fluid">
+            <div id="quote">
+                <p id="myquote"></p>
+                <p id="author"></p>
+           </div>
+       </div>
+        <button type="button" class="btn btn-primary" id="gQuote">New Quote</button>
+        <a href="https://twitter.com/intent/tweet" data-size="large" target="_blank" id="mtTweet">
+          <button type="button" class="btn btn-primary" id="tweet" >Tweet it!</button>
+        </a>
+</div>  
+    <div class="container-fluid">
+    <footer>
+        <span class="copyright">Copyright © Young Maryclaret N. 2016. All Rights Reserved</span>
+    </footer>
+    </div>
+    </body>
+</html>
